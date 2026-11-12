@@ -1,0 +1,391 @@
+dependencies:
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: dangnhuhieu/nvidia_api_compatible:0.1.0@a91b60cf7b48a26bf7495b168a9bf8130e34765b8840fd1e7955fa7878a8c433
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/general_chunker:0.0.16@76da88bd7fc3932b16970c11f5823050ff76e070809715a93cd90a062423233b
+    version: null
+kind: rag_pipeline
+rag_pipeline:
+  description: ''
+  icon: 📙
+  icon_background: '#FFF4ED'
+  icon_type: emoji
+  icon_url: null
+  name: KB_test_01
+version: 0.1.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features: {}
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: datasource
+        targetType: document-extractor
+      id: 1793840788702-source-1793878844027-target
+      selected: false
+      source: '1793840788702'
+      sourceHandle: source
+      target: '1793878844027'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: tool
+      id: 1793878844027-source-1793880031444-target
+      selected: false
+      source: '1793878844027'
+      sourceHandle: source
+      target: '1793880031444'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: knowledge-index
+      id: 1793880031444-source-knowledgeBase-target
+      source: '1793880031444'
+      sourceHandle: source
+      target: knowledgeBase
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        datasource_configurations: {}
+        datasource_label: File
+        datasource_name: upload-file
+        datasource_parameters: {}
+        desc: ''
+        fileExtensions:
+        - txt
+        - markdown
+        - mdx
+        - pdf
+        - html
+        - xlsx
+        - xls
+        - vtt
+        - properties
+        - doc
+        - docx
+        - csv
+        - eml
+        - msg
+        - pptx
+        - xml
+        - epub
+        - ppt
+        - md
+        plugin_id: langgenius/file
+        plugin_unique_identifier: langgenius/file:0.0.1@dify
+        provider_name: file
+        provider_type: local_file
+        selected: false
+        title: File
+        type: datasource
+      height: 51
+      id: '1793840788702'
+      position:
+        x: 280
+        y: 282
+      positionAbsolute:
+        x: 280
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        chunk_structure: text_model
+        embedding_model: nvidia/nemotron-3.5-embed-8b
+        embedding_model_provider: dangnhuhieu/nvidia_api_compatible/nvidia_api_compatible
+        index_chunk_variable_selector:
+        - '1793880031444'
+        - result
+        indexing_technique: high_quality
+        keyword_number: 10
+        retrieval_model:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            reranking_model_name: nvidia/nemotron-3.5-rerank-8b
+            reranking_provider_name: dangnhuhieu/nvidia_api_compatible/nvidia_api_compatible
+          score_threshold: 0.5
+          score_threshold_enabled: false
+          search_method: hybrid_search
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: nvidia/nemotron-3.5-embed-8b
+              embedding_provider_name: dangnhuhieu/nvidia_api_compatible/nvidia_api_compatible
+              vector_weight: 0.7
+        selected: false
+        summary_index_setting: null
+        title: Knowledge Base
+        type: knowledge-index
+      height: 165
+      id: knowledgeBase
+      position:
+        x: 1275.3486713385453
+        y: 321.38140038993737
+      positionAbsolute:
+        x: 1275.3486713385453
+        y: 321.38140038993737
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        is_array_file: false
+        selected: false
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - '1793840788702'
+        - file
+      height: 103
+      id: '1793878844027'
+      position:
+        x: 554.3960760553637
+        y: 394.01732883263634
+      positionAbsolute:
+        x: 554.3960760553637
+        y: 394.01732883263634
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The text you want to chunk.
+            ja_JP: The text you want to chunk.
+            pt_BR: The text you want to chunk.
+            zh_Hans: 你想要分块的文本。
+          input_schema: null
+          label:
+            en_US: Input Content
+            ja_JP: Input Content
+            pt_BR: Input Content
+            zh_Hans: 输入变量
+          llm_description: The text you want to chunk.
+          multiple: false
+          name: input_variable
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The delimiter of the chunks.
+            ja_JP: The delimiter of the chunks.
+            pt_BR: The delimiter of the chunks.
+            zh_Hans: 块的分隔符。
+          input_schema: null
+          label:
+            en_US: Delimiter
+            ja_JP: Delimiter
+            pt_BR: Delimiter
+            zh_Hans: 分隔符
+          llm_description: The delimiter of the chunks, the format of the delimiter
+            must be a string.
+          multiple: false
+          name: delimiter
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The maximum chunk length.
+            ja_JP: The maximum chunk length.
+            pt_BR: The maximum chunk length.
+            zh_Hans: 最大块的长度。
+          input_schema: null
+          label:
+            en_US: Maximum Chunk Length
+            ja_JP: Maximum Chunk Length
+            pt_BR: Maximum Chunk Length
+            zh_Hans: 最大块的长度
+          llm_description: The maximum chunk length, the format of the chunk size
+            must be an integer.
+          multiple: false
+          name: max_chunk_length
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The chunk overlap length.
+            ja_JP: The chunk overlap length.
+            pt_BR: The chunk overlap length.
+            zh_Hans: 块的重叠长度。
+          input_schema: null
+          label:
+            en_US: Chunk Overlap Length
+            ja_JP: Chunk Overlap Length
+            pt_BR: Chunk Overlap Length
+            zh_Hans: 块的重叠长度
+          llm_description: The chunk overlap length, the format of the chunk overlap
+            length must be an integer.
+          multiple: false
+          name: chunk_overlap_length
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Replace consecutive spaces, newlines and tabs
+            ja_JP: Replace consecutive spaces, newlines and tabs
+            pt_BR: Replace consecutive spaces, newlines and tabs
+            zh_Hans: 替换连续的空格、换行符和制表符
+          input_schema: null
+          label:
+            en_US: Replace consecutive spaces, newlines and tabs
+            ja_JP: Replace consecutive spaces, newlines and tabs
+            pt_BR: Replace consecutive spaces, newlines and tabs
+            zh_Hans: 替换连续的空格、换行符和制表符
+          llm_description: Replace consecutive spaces, newlines and tabs, the format
+            of the replace must be a boolean.
+          multiple: false
+          name: replace_consecutive_spaces_newlines_tabs
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Delete all URLs and email addresses
+            ja_JP: Delete all URLs and email addresses
+            pt_BR: Delete all URLs and email addresses
+            zh_Hans: 删除所有URL和电子邮件地址
+          input_schema: null
+          label:
+            en_US: Delete all URLs and email addresses
+            ja_JP: Delete all URLs and email addresses
+            pt_BR: Delete all URLs and email addresses
+            zh_Hans: 删除所有URL和电子邮件地址
+          llm_description: Delete all URLs and email addresses, the format of the
+            delete must be a boolean.
+          multiple: false
+          name: delete_all_urls_and_email_addresses
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        params:
+          chunk_overlap_length: ''
+          delete_all_urls_and_email_addresses: ''
+          delimiter: ''
+          input_variable: ''
+          max_chunk_length: ''
+          replace_consecutive_spaces_newlines_tabs: ''
+        plugin_id: langgenius/general_chunker
+        plugin_unique_identifier: langgenius/general_chunker:0.0.15@8457cebe75dce11bfe5a6a30377fe36e5d9b48987419861252ef1c3016ee87e6
+        provider_icon: http://127.0.0.1:5001/console/api/workspaces/current/plugin/icon?tenant_id=c06c30b6-7eaa-499b-83cc-1d819d0403e8&filename=370c862922bcea6666a3b3a962c3bcf718f3ad3df5ad0bae03f4f1b3c682faf2.svg
+        provider_id: langgenius/general_chunker/general_chunker
+        provider_name: langgenius/general_chunker/general_chunker
+        provider_show_name: General Chunker
+        provider_type: builtin
+        selected: false
+        title: General Chunker
+        tool_configurations: {}
+        tool_description: A tool for general text chunking mode, the chunks retrieved
+          and recalled are the same.
+        tool_label: General Chunker
+        tool_name: general_chunker
+        tool_node_version: '2'
+        tool_parameters:
+          chunk_overlap_length:
+            type: constant
+            value: 50
+          delete_all_urls_and_email_addresses:
+            type: constant
+            value: null
+          delimiter:
+            type: mixed
+            value: \n\n
+          input_variable:
+            type: mixed
+            value: '{{#1793878844027.text#}}'
+          max_chunk_length:
+            type: constant
+            value: 800
+          replace_consecutive_spaces_newlines_tabs:
+            type: constant
+            value: null
+        type: tool
+      height: 51
+      id: '1793880031444'
+      position:
+        x: 853.4566071347826
+        y: 394.01732883263634
+      positionAbsolute:
+        x: 853.4566071347826
+        y: 394.01732883263634
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+      zIndex: 0
+    viewport:
+      x: -103.71811833104232
+      y: 30.940752002957026
+      zoom: 0.5400298988271883
+  rag_pipeline_variables: []
